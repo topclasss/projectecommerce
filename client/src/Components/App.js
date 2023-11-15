@@ -8,8 +8,7 @@ const App = () => {
         <BrowserRouter>
             <GlobalStyle />
             <Routes>
-                <p>test</p>
-                {/* <Route path="/" element={} /> */}
+                <Route path="/" element={<p>test</p>} />
             </Routes>
         </BrowserRouter>
     );

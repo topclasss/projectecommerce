@@ -1,10 +1,7 @@
 import ReactDOM from 'react-dom';
 
-import App from './components/App';
+import App from './Components/App';
 
-const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
-ReactDOM.render(
-    <App />,
-    rootElement
-);
+root.render( <App /> );
