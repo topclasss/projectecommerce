@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import GlobalStyle from "./GlobalStyles";
+import GlobalStyle from "./reused/GlobalStyles";
 
 
 const App = () => {
