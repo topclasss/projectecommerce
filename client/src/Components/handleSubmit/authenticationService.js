@@ -1,6 +1,6 @@
 export const handleSubmit = async (isLogin, email, password, firstName, lastName, cart) => {
   try {
-    const url = isLogin ? 'http://localhost:8000/get-customer-infos' : 'http://localhost:8000/add-customer';
+    const url = isLogin ? '/get-customer-infos' : '/add-customer';
 
     const body = isLogin
       ? { email, password }
