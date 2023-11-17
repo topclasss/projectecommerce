@@ -7,7 +7,7 @@ export const handleSubmit = async (isLogin, email, password, firstName, lastName
       : { email, password, firstName, lastName, cart };
 
     const response = await fetch(url, {
-      method: isLogin ? 'GET' : 'POST',
+      method: isLogin ? 'POST' : 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
