@@ -7,7 +7,9 @@ const morgan = require('morgan');
 const {
   getProducts,
   addCustomer,
-  getCustomerInfos
+  getCustomerInfos,
+  addToCart,
+  removeFromCart
 } = require('./handlers')
 
 express()
@@ -21,7 +23,9 @@ express()
 
   .get("/get-products", getProducts)
   .post("/add-customer", addCustomer)
-  .get("/get-customer-infos", getCustomerInfos)
+  .post("/get-customer-infos", getCustomerInfos)
+  .patch("/add-to-cart", addToCart)
+  .patch("/remove-from-cart", removeFromCart)
 
 
 

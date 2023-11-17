@@ -36,6 +36,7 @@ const addCustomer = async (request, response) => {
     firstName: firstName,
     lastName: lastName,
     cart: cart ? cart : [],
+    previousOrders: []
   };
 
   //validation for missing information
@@ -60,6 +61,8 @@ const addCustomer = async (request, response) => {
     await client.connect();
     const db = client.db("project_ecom");
     await db.collection("customers").insertOne(newCustomer);
+    //remove password before sending data back
+    delete newCustomer.password
     response
       .status(201)
       .json({ status: 201, data: newCustomer, message: "customer added" });
@@ -117,8 +120,18 @@ const getCustomerInfos = async (request, response) => {
   }
 };
 
+const addToCart = async (request, response) => {
+
+}
+
+const removeFromCart = async (request, response) => {
+
+}
+
 module.exports = {
   getProducts,
   addCustomer,
   getCustomerInfos,
+  addToCart,
+  removeFromCart
 };
