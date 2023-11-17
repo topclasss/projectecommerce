@@ -21,7 +21,7 @@ express()
 
   .get("/get-products", getProducts)
   .post("/add-customer", addCustomer)
-  .get("")
+  .get("/get-customer-infos", getCustomerInfos)
 
 
 
