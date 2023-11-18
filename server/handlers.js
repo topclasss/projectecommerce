@@ -88,7 +88,6 @@ const getCustomerInfos = async (request, response) => {
       .find({ email: email })
       .toArray();
 
-    
     const customerInfos = result[0];
 
     // check if email and password match. result error if not. Delete password key from data if valid.
@@ -129,28 +128,105 @@ const addToCart = async (request, response) => {
     return response.status(400).json({
       status: 400,
       data: request.body,
-      message: "missing information or invalide key naming",
+      message:
+        "missing information or invalide key naming (Should be customerId and productId)",
     });
   }
 
-// -findOne to find the user document
-// -findOne to find the product document
-// -make sure both were found
-// -js find to see if item is in cart
-// -if not in cart, make sure product has at least 1 available, then updateOne $push and you're done
-// -if in cart, make sure product has at least 1 more than quant in cart object.  If so, updateOne and you're done
+  // -findOne to find the user document
+  // -findOne to find the product document
+  // -make sure both were found
+  // -js find to see if item is in cart
+  // -if not in cart, make sure product has at least 1 available, then updateOne $push and you're done
+  // -if in cart, make sure product has at least 1 more than quant in cart object.  If so, updateOne and you're done
 
   const client = new MongoClient(MONGO_URI);
   try {
     await client.connect();
     const db = client.db("project_ecom");
-    const customerDocument = await db.collection("customers").findOne({_id: customerId})
-    const productDocument = await db.collection("items").findOne({_id: Number(productId)})
+    const customerDocument = await db
+      .collection("customers")
+      .findOne({ _id: customerId });
+    const productDocument = await db
+      .collection("items")
+      .findOne({ _id: Number(productId) });
 
-    console.log(productDocument);
+    //validate if customer was found
+    if (!customerDocument) {
+      return response.status(404).json({
+        status: 404,
+        data: request.body,
+        message: "customer not found",
+      });
+    }
+    //validate if product was found
+    if (!productDocument) {
+      return response.status(404).json({
+        status: 404,
+        data: request.body,
+        message: "product not found",
+      });
+    }
 
-    response.status(200).json({ status: 200, data: {customerDocument, productDocument}, message: "success"})
+    //validate if item not out of stock
+    if (productDocument.numInStock < 1) {
+      return response.status(400).json({
+        status: 400,
+        data: request.body,
+        message: "product out of stock",
+      });
+    }
 
+    // check if the product is already in cart and store it or null in the variable
+    const inCartProduct = customerDocument.cart.find(
+      (product) => product._id === productId
+    );
+
+    //validate if enough stock to add one more
+    if (
+      inCartProduct &&
+      inCartProduct.quantity + 1 > productDocument.numInStock
+    ) {
+      return response.status(400).json({
+        status: 400,
+        data: request.body,
+        message: "not enough of this product left in stock",
+      });
+    }
+
+    // update mongo and add product in cart or increase quantity
+    if (inCartProduct) {
+      const result = await db
+        .collection("customers")
+        .updateOne(
+          { _id: customerId, "cart._id": productId },
+          { $inc: { "cart.$.quantity": 1 } }
+        );
+
+      result.modifiedCount === 1 &&
+        response
+          .status(200)
+          .json({
+            status: 200,
+            data: { result },
+            message: "quantity of existing product successfully incremented",
+          });
+    } else {
+      const result = await db
+        .collection("customers")
+        .updateOne(
+          { _id: customerId },
+          { $push: { cart: { _id: productId, quantity: 1 } } }
+        );
+      response
+        .status(200)
+        .json({
+          status: 200,
+          data: { result },
+          message: "new product successfully added to cart",
+        });
+    }
+    
   } catch (error) {
     console.log(error);
     response
