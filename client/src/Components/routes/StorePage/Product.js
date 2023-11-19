@@ -1,4 +1,4 @@
-//This componement is used to return one product information
+//Ued to return one product information
 
 const Product = ({ price, productId, imageSrc, category }) => {
  return (

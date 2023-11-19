@@ -1,15 +1,20 @@
-//This Component is used to get 6 ramdom products
+//Used to get 6 ramdom products
 
-import { ProductsContext } from "../../Reused/ProductsContext";
+import { ContextProducts } from "../../Reused/ContextProducts";
 import { useContext, useEffect, useState } from "react";
 import Product from "./Product";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const GetRandomProducts = () => {
-  const { products } = useContext(ProductsContext);
+  //Get variables from Context and Params 
+  const { products } = useContext(ContextProducts);
+
+   //State variable for the 6 products to display 
   const [productsToDisplay, setProductsToDisplay] = useState(null);
 
+
+  //Select 6 random product to display
   useEffect(() => {
     if (products) {
       const mixedProductsArray = [...products].sort(() => {
@@ -24,6 +29,7 @@ const GetRandomProducts = () => {
     }
   }, [products]);
 
+  //Page setup
   return (
     <MainGrid>
       {productsToDisplay ? (

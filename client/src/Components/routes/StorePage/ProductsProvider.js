@@ -1,11 +1,12 @@
-//This component is used to get all the product from MongoDB and pass it to all children
+//Used to get all the product from MongoDB and pass it to all children
 
-import {ContextProduct} from "../../Reused/ContextProducts";
+import { ContextProducts } from "../../Reused/ContextProducts";
 import { useEffect } from "react";
 import { useState } from "react";
 
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState(null);
+  console.log("products", products)
 
   useEffect(() => {
     fetch("/get-products")
@@ -19,8 +20,8 @@ export const ProductsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ContextProduct.Provider value={{ products }}>
+    <ContextProducts.Provider value={{ products }}>
       {children}
-    </ContextProduct.Provider>
+    </ContextProducts.Provider>
   );
 };

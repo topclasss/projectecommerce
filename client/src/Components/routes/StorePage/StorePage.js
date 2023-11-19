@@ -1,4 +1,4 @@
-//This Component is used to return the page with random products (homepage)
+//Used to return the page with random products (homepage)
 
 import styled from "styled-components";
 import GetRandomProducts from "./GetRandomProducts";
