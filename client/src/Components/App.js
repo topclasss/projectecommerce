@@ -6,7 +6,7 @@ import RegisterPage from './routes/RegisterPage/RegisterPage';
 import StorePage from "./routes/StorePage/StorePage";
 import ByCategoryPage from "./routes/StorePage/ByCategoryPage"
 import DetailsPage from "./routes/StorePage/DetailsPage"
-import { UserProvider } from './Reused/UserContext';
+import { UserProvider } from './Reused/CustomerContext ';
 
 
 

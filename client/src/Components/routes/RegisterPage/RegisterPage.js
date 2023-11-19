@@ -11,7 +11,7 @@ import {
 } from '../../Reused/styledComponents'; 
 import { Link } from 'react-router-dom'; 
 import { handleSubmit } from '../../handleSubmit/authenticationService'; 
-import { useUser } from '../../Reused/UserContext';
+import { useUser } from '../../Reused/CustomerContext ';
 
 const RegisterPage = () => {
     // State variables to keep track of the form fields
