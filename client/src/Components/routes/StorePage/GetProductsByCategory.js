@@ -1,6 +1,6 @@
-//This Componene is used to get products by category
+//Used to get products by category
 
-import { ProductsContext } from "../../Reused/ProductsContext";
+import { ContextProducts } from "../../Reused/ContextProducts";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Product from "./Product";
@@ -8,10 +8,16 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext, setShowFooter}) => {
-  const { products } = useContext(ProductsContext);
+ 
+  //Get variables from Context and Params
+  const { products } = useContext(ContextProducts);
   const { categoryId } = useParams();
+
+ //State variable for products display  
   const [productsToDisplay, setProductsToDisplay] = useState(null);
 
+
+  //Find products included in the selected category, set 21 products by page and set previous and next button accroding to the number of products
   useEffect(() => {
     if (products !== null) {
       const productsByCategory = products.filter((product) => {
@@ -41,6 +47,8 @@ const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext
       }
     }
   }, [products, pageNumber]);
+
+  //Page setup
 
   return (
     <MainGrid>

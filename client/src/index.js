@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import { ProductsProvider } from './Components/routes/StorePage/ProductsProvider';
 
 import App from './Components/App';
 

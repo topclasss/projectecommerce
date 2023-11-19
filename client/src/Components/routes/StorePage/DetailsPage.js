@@ -1,15 +1,26 @@
-//This Componene is used to get product detail
+//Used to get product detail
 
-import { ProductsContext } from "../../Reused/ProductsContext";
+import { ContextProducts } from "../../Reused/ContextProducts";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { handleAddToCart } from "../../handlesCart/handleAddToCart";
 
 const DetailsPage = ({}) => {
-  const { products } = useContext(ProductsContext);
+ //Get variables from Context and Params 
+  const { products } = useContext(ContextProducts);
   const { productId } = useParams();
+
+ //State variable for product info to display 
   const [productInfo, setproductInfo] = useState(null);
 
+//Send productId to backend
+  const handleAdd = async () => {
+    await handleAddToCart(productId);
+};
+
+
+//Find the selected product from all products
   useEffect(() => {
     if (products !== null) {
       const productSelected = products.find((product) => {
@@ -19,6 +30,7 @@ const DetailsPage = ({}) => {
     }
   }, [products]);
 
+  //Page setup
   return (
     <>
       <Title>Product page</Title>
@@ -33,7 +45,7 @@ const DetailsPage = ({}) => {
             <img src={productInfo.imageSrc} />
             <p>Stock: {productInfo.numInStock}</p>
             <p>Company: {productInfo.companyId}</p>
-            <button>Add to cart</button>
+            <button onClick={handleAdd}>Add to cart</button>
           </ProductBox>
         ) : (
           <p>Searching</p>
