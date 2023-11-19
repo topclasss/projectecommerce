@@ -55,8 +55,31 @@ body: {
   productId: ""
 }
 return:
+data: {
+  _id: "<product id>",
+  quantity: <updated quantity>
+}
 message: {
   "new product successfully added to cart"
   or
   "quantity of existing product successfully incremented"
+}
+
+/remove-from-cart
+expect:
+body: {
+  customerId: "",
+  productId: ""
+}
+return:
+data: {
+  _id: "<product id>",
+  quantity: <updated quantity>
+  or
+  { } ***if product was removed from card***
+}
+message: {
+   "product successfully removed from cart"
+  or
+  "quantity of existing product successfully decreased"
 }
