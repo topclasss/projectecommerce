@@ -6,6 +6,7 @@ const morgan = require('morgan');
 //Handlers import here
 const {
   getProducts,
+  getProduct,
   addCustomer,
   getCustomerInfos,
   addToCart,
@@ -22,6 +23,7 @@ express()
   //------------ENDPOINTS STARTS HERE---------------
 
   .get("/get-products", getProducts)
+  .get("/get-product/:id", getProduct)
   .post("/add-customer", addCustomer)
   .post("/get-customer-infos", getCustomerInfos)
   .patch("/add-to-cart", addToCart)
