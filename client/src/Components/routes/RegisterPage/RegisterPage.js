@@ -11,9 +11,11 @@ import {
 } from '../../Reused/styledComponents'; 
 import { Link } from 'react-router-dom'; 
 import { handleSubmit } from '../../handleSubmit/authenticationService'; 
+import { useUser } from '../../Reused/UserContext';
 
 const RegisterPage = () => {
     // State variables to keep track of the form fields
+    const { login } = useUser();  
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -31,8 +33,15 @@ const RegisterPage = () => {
       const cartData = [];
 
       // Call your authentication service with the required parameters
-      await handleSubmit(false, email, password, firstName, lastName, cartData);
-  };
+      try {
+        const customerInfo = await handleSubmit(false, email, password, firstName, lastName, cartData);
+        login(customerInfo); // Call login function to set customer information
+        // Handle successful registration, redirect, etc...
+        console.log('Registration successful');
+      } catch (error) {
+        console.error('Error during registration:', error);
+      }
+    };
   
     // Structure of our page
     return (

@@ -11,16 +11,20 @@ import {
 } from '../../Reused/styledComponents'; 
 import { Link } from 'react-router-dom';
 import { handleSubmit } from '../../handleSubmit/authenticationService';
+import { useUser } from '../../Reused/UserContext';
 
 const LoginPage = () => {
   // State variables to hold the username and password entered by the user
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useUser();
 
   // Function to handle the login form
   const handleLoginSubmit = async () => {
-    await handleSubmit(true, email, password, '', []);
-};
+    const customerInfo = await handleSubmit(true, email, password, '', []);
+    login(customerInfo);  // Call the `login` function from the UserContext to set customer information
+
+  };
 
   // Structure for our page
   return (
