@@ -4,7 +4,12 @@
 
 /get-products
 return:
-data: [ <all products ojects> ]
+data: [ <all products ojects in an array> ]
+
+***This one shouldn't be needed for now. Use the ContextProducts instead***
+/get-product/:id
+return:
+data: { <one product object> }
 
 
 /create-customer
