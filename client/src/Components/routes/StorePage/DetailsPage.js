@@ -5,18 +5,18 @@ import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { handleAddToCart } from "../../handlesCart/handleAddToCart";
-import {UserContext} from "../../Reused/UserContext"
+import {CustomerContext} from "../../Reused/CustomerContext "
 
 const DetailsPage = ({}) => {
  //Get variables from Context and Params 
   const { products } = useContext(ProductContext);
   const { productId } = useParams();
-  const {customer} = useContext(UserContext)
+  const {customer, addToCart} = useContext(CustomerContext)
 
  //State variable for product info to display and button disable
   const [productInfo, setproductInfo] = useState(null);
   const [addButtonDisable, setAddButtonDisable] = useState(false)
-  const [loggedOrNot, setLoggedOrNot] = useState(true)
+  //const [loggedOrNot, setLoggedOrNot] = useState(true)
 
 //Find the selected product from all products
   useEffect(() => {
@@ -29,11 +29,11 @@ const DetailsPage = ({}) => {
   }, [products]);
 
 //Change button name if user is logged
-useEffect(() => {
+/* useEffect(() => {
   if (customer !== null) {
     setLoggedOrNot(false);
   }
-}, [customer]);
+}, [customer]); */
 
 //Change button disable during add item and re-change it if it works
 
@@ -41,7 +41,8 @@ useEffect(() => {
 //Send productId to backend
 const handleAdd = async () => {
   setAddButtonDisable(true)
-  await handleAddToCart(productId, setAddButtonDisable);
+  await handleAddToCart(productId, addToCart, customer._id);   
+  setAddButtonDisable(false)
 };
 
 
@@ -61,7 +62,7 @@ const handleAdd = async () => {
             <img src={productInfo.imageSrc} />
             <p>Stock: {productInfo.numInStock}</p>
             <p>Company: {productInfo.companyId}</p>
-            <button onClick={handleAdd} disabled={addButtonDisable}>{loggedOrNot ? "Please log in or sign in before adding to cart" : "Add to cart"}</button>
+            <button onClick={handleAdd} disabled={addButtonDisable}>{ "Please log in or sign in before adding to cart Add to cart"}</button>
           </ProductBox>
         ) : (
           <p>Searching</p>
