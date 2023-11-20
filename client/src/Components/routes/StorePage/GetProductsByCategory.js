@@ -1,6 +1,6 @@
 //Used to get products by category
 
-import { ContextProducts } from "../../Reused/ContextProducts";
+import { ProductContext } from "../../Reused/ProductContext";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Product from "./Product";
@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext, setShowFooter}) => {
  
   //Get variables from Context and Params
-  const { products } = useContext(ContextProducts);
+  const { products } = useContext(ProductContext);
   const { categoryId } = useParams();
 
  //State variable for products display  

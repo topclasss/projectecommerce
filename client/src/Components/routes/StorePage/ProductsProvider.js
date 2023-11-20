@@ -1,6 +1,6 @@
 //Used to get all the product from MongoDB and pass it to all children
 
-import { ContextProducts } from "../../Reused/ContextProducts";
+import { ProductContext } from "../../Reused/ProductContext";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -20,8 +20,8 @@ export const ProductsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ContextProducts.Provider value={{ products }}>
+    <ProductContext.Provider value={{ products }}>
       {children}
-    </ContextProducts.Provider>
+    </ProductContext.Provider>
   );
 };

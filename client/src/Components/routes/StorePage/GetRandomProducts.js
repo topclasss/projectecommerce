@@ -1,6 +1,6 @@
 //Used to get 6 ramdom products
 
-import { ContextProducts } from "../../Reused/ContextProducts";
+import { ProductContext } from "../../Reused/ProductContext";
 import { useContext, useEffect, useState } from "react";
 import Product from "./Product";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const GetRandomProducts = () => {
   //Get variables from Context and Params 
-  const { products } = useContext(ContextProducts);
+  const { products } = useContext(ProductContext);
 
    //State variable for the 6 products to display 
   const [productsToDisplay, setProductsToDisplay] = useState(null);

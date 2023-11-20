@@ -1,24 +1,22 @@
 //Used to get product detail
 
-import { ContextProducts } from "../../Reused/ContextProducts";
+import { ProductContext } from "../../Reused/ProductContext";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { handleAddToCart } from "../../handlesCart/handleAddToCart";
+import {UserContext} from "../../Reused/UserContext"
 
 const DetailsPage = ({}) => {
  //Get variables from Context and Params 
-  const { products } = useContext(ContextProducts);
+  const { products } = useContext(ProductContext);
   const { productId } = useParams();
+  const {customer} = useContext(UserContext)
 
- //State variable for product info to display 
+ //State variable for product info to display and button disable
   const [productInfo, setproductInfo] = useState(null);
-
-//Send productId to backend
-  const handleAdd = async () => {
-    await handleAddToCart(productId);
-};
-
+  const [addButtonDisable, setAddButtonDisable] = useState(false)
+  const [loggedOrNot, setLoggedOrNot] = useState(true)
 
 //Find the selected product from all products
   useEffect(() => {
@@ -29,6 +27,24 @@ const DetailsPage = ({}) => {
       setproductInfo(productSelected);
     }
   }, [products]);
+
+//Change button name if user is logged
+useEffect(() => {
+  if (customer !== null) {
+    setLoggedOrNot(false);
+  }
+}, [customer]);
+
+//Change button disable during add item and re-change it if it works
+
+
+//Send productId to backend
+const handleAdd = async () => {
+  setAddButtonDisable(true)
+  await handleAddToCart(productId, setAddButtonDisable);
+};
+
+
 
   //Page setup
   return (
@@ -45,7 +61,7 @@ const DetailsPage = ({}) => {
             <img src={productInfo.imageSrc} />
             <p>Stock: {productInfo.numInStock}</p>
             <p>Company: {productInfo.companyId}</p>
-            <button onClick={handleAdd}>Add to cart</button>
+            <button onClick={handleAdd} disabled={addButtonDisable}>{loggedOrNot ? "Please log in or sign in before adding to cart" : "Add to cart"}</button>
           </ProductBox>
         ) : (
           <p>Searching</p>
