@@ -3,12 +3,7 @@ export const handleAddToCart = async (productId) => {
 try{
 const url = '/add-to-cart'
 //missing costumerId
-const customerId = "12345"
 const body = {customerId, productId}
-
-console.log("customerId",customerId)
-console.log("productId", productId)
-console.log("url", url)
 
 const response = await fetch(url, {
     method: "PATCH",
@@ -24,7 +19,6 @@ console.log("response", response)
   
       const result = await response.json();
   
-      console.log(result);
     } catch (error) {
       console.error(`Error during adding product to cart`, error);
     }
