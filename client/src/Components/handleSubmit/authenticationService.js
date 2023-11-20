@@ -1,4 +1,4 @@
-export const handleSubmit = async (isLogin, email, password, firstName, lastName, cart) => {
+export const handleSubmit = async (isLogin, email, password, firstName, lastName, cart, login, navigate) => {
   try {
     const url = isLogin ? '/get-customer-infos' : '/add-customer';
 
@@ -26,12 +26,12 @@ export const handleSubmit = async (isLogin, email, password, firstName, lastName
 
 
     // Handle successful login/registration, redirect, etc...
-    console.log(result);
+    if (result.status === 201 ||  result.status === 200 ) 
+    login(result.data)
+   navigate("/")
 
 
-    return result; // Return the result on success
   } catch (error) {
     console.error(`Error during ${isLogin ? 'login' : 'registration'}:`, error);
-    throw error; //throw the error to indicate an unsuccessful login
   }
 };

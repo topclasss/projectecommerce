@@ -4,7 +4,6 @@
 export const handleAddToCart = async (productId, addToCart, customerId) => {
 try{
 const url = '/add-to-cart'
-//missing costumerId
 const body = {customerId, productId}
 
 

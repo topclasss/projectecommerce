@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import React, { useContext, useState } from 'react';
+
 import {
   Container,
   Title,
@@ -12,30 +13,23 @@ import {
 } from '../../Reused/styledComponents';
 import { Link } from 'react-router-dom';
 import { handleSubmit } from '../../handleSubmit/authenticationService';
-import { useUser } from '../../Reused/CustomerContext ';
+//import { useUser } from '../../Reused/CustomerContext ';
+import { useNavigate } from 'react-router-dom';
+import { CustomerContext } from '../../Reused/CustomerContext ';
 
 
 const LoginPage = () => {
   // State variables to hold the username and password entered by the user
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useUser();
-  const navigate = useNavigate();
 
+  const { login } = useContext(CustomerContext);
+  const navigate = useNavigate()
 
   // Function to handle the login form
   const handleLoginSubmit = async () => {
-    try {
-      const customerInfo = await handleSubmit(true, email, password, '', []);
-      login(customerInfo);
- 
-      // redirect to /store on successful login
-      navigate('/store');
-    } catch (error) {
-      // handle login failure
-      console.error('Login failed:', error);
-      // don't redirect on unsuccessful login
-    }
+    const customerInfo = await handleSubmit(true, email, password, '', "", [], login, navigate);
+    //login(customerInfo);  // Call the `login` function from the UserContext to set customer information
   };
 
 
