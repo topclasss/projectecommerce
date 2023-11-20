@@ -35,7 +35,7 @@ const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext
 
       if (pageNumber !== 1) {
         setDisablePrevious(false);
-      }
+      }else {setDisablePrevious(true);}
 
       if (
         (productsByCategory.length / 21 < pageNumber &&

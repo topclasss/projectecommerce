@@ -11,7 +11,8 @@ const ByCategoryPage = () => {
   const [showFooter, setShowFooter ] = useState ("none");
   const [categoryTitle, setCategoryTitle] = useState ("Shopping page by category")
  
-
+console.log("disableNext", disableNext)
+console.log("disablePrevious", disablePrevious)
   return (
     <>
       <Title>{categoryTitle}</Title>
@@ -26,6 +27,7 @@ const ByCategoryPage = () => {
       </main>
       <Footer>
         <button style={{ display: showFooter }} disabled={disablePrevious} onClick={() => {setPageNumber(pageNumber - 1);}}>Previous Page</button>
+        <p style={{ display: showFooter }}>{pageNumber}</p>
         <button  style={{ display: showFooter }} disabled={disableNext} onClick={() => {setPageNumber(pageNumber + 1);}}>Next Page</button>
       </Footer>
     </>
@@ -43,6 +45,8 @@ const Footer = styled.footer`
   text-align: center;
   margin-top: 40px;
   margin-bottom: 40px;
+  display: flex;
+  justify-content: space-evenly;
 
   button {
     margin: 10px;

@@ -15,8 +15,8 @@ const DetailsPage = ({}) => {
 
  //State variable for product info to display and button disable
   const [productInfo, setproductInfo] = useState(null);
-  const [addButtonDisable, setAddButtonDisable] = useState(false)
-  //const [loggedOrNot, setLoggedOrNot] = useState(true)
+  const [addButtonDisable, setAddButtonDisable] = useState(true)
+  const [logged, setLogged] = useState(false)
 
 //Find the selected product from all products
   useEffect(() => {
@@ -29,14 +29,12 @@ const DetailsPage = ({}) => {
   }, [products]);
 
 //Change button name if user is logged
-/* useEffect(() => {
+useEffect(() => {
   if (customer !== null) {
-    setLoggedOrNot(false);
+    setLogged(true);
+    setAddButtonDisable(false)
   }
-}, [customer]); */
-
-//Change button disable during add item and re-change it if it works
-
+}, [customer]); 
 
 //Send productId to backend
 const handleAdd = async () => {
@@ -62,7 +60,7 @@ const handleAdd = async () => {
             <img src={productInfo.imageSrc} />
             <p>Stock: {productInfo.numInStock}</p>
             <p>Company: {productInfo.companyId}</p>
-            <button onClick={handleAdd} disabled={addButtonDisable}>{ "Please log in or sign in before adding to cart Add to cart"}</button>
+            <button onClick={handleAdd} disabled={addButtonDisable}>{ logged ? "Add to cart" : "Please log in or sign in before adding to cart"}</button>
           </ProductBox>
         ) : (
           <p>Searching</p>
