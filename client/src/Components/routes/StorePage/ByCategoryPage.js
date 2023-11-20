@@ -9,18 +9,19 @@ const ByCategoryPage = () => {
   const [disablePrevious, setDisablePrevious] = useState(true);
   const [disableNext, setDisableleNext] = useState(false);
   const [showFooter, setShowFooter ] = useState ("none");
-
+  const [categoryTitle, setCategoryTitle] = useState ("Shopping page by category")
  
 
   return (
     <>
-      <Title>Shopping page by category</Title>
+      <Title>{categoryTitle}</Title>
       <main>
         <GetProductsByCategory
           pageNumber={pageNumber}
           setDisablePrevious={setDisablePrevious}
           setDisableleNext={setDisableleNext}
           setShowFooter={setShowFooter}
+          setCategoryTitle={setCategoryTitle}
         />
       </main>
       <Footer>

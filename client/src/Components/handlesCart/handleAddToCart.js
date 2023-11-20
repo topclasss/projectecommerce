@@ -1,9 +1,12 @@
 
-export const handleAddToCart = async (productId) => {
+
+
+export const handleAddToCart = async (productId, addToCart, customerId) => {
 try{
 const url = '/add-to-cart'
 //missing costumerId
 const body = {customerId, productId}
+
 
 const response = await fetch(url, {
     method: "PATCH",
@@ -12,13 +15,18 @@ const response = await fetch(url, {
       },
       body: JSON.stringify(body),
     })
-console.log("response", response)
+
      if (!response.ok) {
         throw new Error(`Add product to cart failed`);
       }
   
       const result = await response.json();
-  
+      if (result.status === 200) {
+       addToCart(productId)
+  console.log("result", result.status)
+ } else {
+
+  }
     } catch (error) {
       console.error(`Error during adding product to cart`, error);
     }

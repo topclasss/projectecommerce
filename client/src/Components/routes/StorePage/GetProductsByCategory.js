@@ -7,7 +7,7 @@ import Product from "./Product";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext, setShowFooter}) => {
+const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext, setShowFooter, setCategoryTitle}) => {
  
   //Get variables from Context and Params
   const { products } = useContext(ProductContext);
@@ -31,6 +31,7 @@ const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext
       });
       setProductsToDisplay(productsByPage);
       setShowFooter("");
+      setCategoryTitle(categoryId)
 
       if (pageNumber !== 1) {
         setDisablePrevious(false);
