@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Container,
   Title,
@@ -11,16 +11,19 @@ import {
 } from '../../Reused/styledComponents'; 
 import { Link } from 'react-router-dom'; 
 import { handleSubmit } from '../../handleSubmit/authenticationService'; 
-import { useUser } from '../../Reused/CustomerContext ';
+//import { useUser } from '../../Reused/CustomerContext ';
+import { CustomerContext } from '../../Reused/CustomerContext ';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
     // State variables to keep track of the form fields
-    const { login } = useUser();  
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const {login} = useContext(CustomerContext)
+    const navigate = useNavigate()
   
     // Function to handle the form submission when the user wants to register
     const handleRegisterSubmit = async () => {
@@ -34,8 +37,8 @@ const RegisterPage = () => {
 
       // Call your authentication service with the required parameters
       try {
-        const customerInfo = await handleSubmit(false, email, password, firstName, lastName, cartData);
-        login(customerInfo); // Call login function to set customer information
+        const customerInfo = await handleSubmit(false, email, password, firstName, lastName, cartData, login, navigate);
+        //login(customerInfo); // Call login function to set customer information
         // Handle successful registration, redirect, etc...
         console.log('Registration successful');
       } catch (error) {

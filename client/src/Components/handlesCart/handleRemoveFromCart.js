@@ -1,8 +1,9 @@
- export const handleRemoveFromCart = async (productId) => {
+ 
+ 
+ export const handleRemoveFromCart = async (productId, removeToCart, customerId) => {
     try{
     const url = '/remove-from-cart'
-    //missing costumerId
-    const body = productId
+    const body = {customerId, productId}
     
     const response = await fetch(url, {
         method: "PATCH",
@@ -17,8 +18,11 @@
           }
       
           const result = await response.json();
-      
-          console.log(result);
+          if (result.status === 200) {
+            removeToCart(productId)
+       console.log("result", result.status) 
+       }else{
+        }
         } catch (error) {
           console.error(`Error during removing from cart'}:`, error);
         }

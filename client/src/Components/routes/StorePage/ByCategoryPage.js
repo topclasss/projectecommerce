@@ -10,9 +10,7 @@ const ByCategoryPage = () => {
   const [disableNext, setDisableleNext] = useState(false);
   const [showFooter, setShowFooter ] = useState ("none");
   const [categoryTitle, setCategoryTitle] = useState ("Shopping page by category")
- 
-console.log("disableNext", disableNext)
-console.log("disablePrevious", disablePrevious)
+
   return (
     <>
       <Title>{categoryTitle}</Title>

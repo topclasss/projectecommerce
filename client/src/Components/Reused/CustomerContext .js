@@ -7,7 +7,7 @@ export const CustomerContext = createContext();
 export const UserProvider = ({ children }) => {
 // User state, set to null = logged out
   const [customer, setCustomer] = useState(null);
-console.log(customer)
+
 // update the customer information when a user logs in
   const login = (customerInfo) => {
     setCustomer(customerInfo);
@@ -37,7 +37,7 @@ const isProductInTheCart =  customer.cart.find((product) => {
 
 //Remove to cart
 
-/* const removeToCart = (productId) => {
+ const removeToCart = (productId) => {
   const isProductInTheCart =  customer.cart.find((product) => {
      return (product._id === productId)
     })
@@ -54,7 +54,7 @@ const isProductInTheCart =  customer.cart.find((product) => {
       setCustomer({...customer, cart: remaningProduct })
     }
     }
-   } */
+   } 
   
 
 
@@ -62,7 +62,7 @@ const isProductInTheCart =  customer.cart.find((product) => {
 
 // Provide the CustomerContext to its children
   return (
-    <CustomerContext.Provider value={{ customer, login, logout, addToCart }}>
+    <CustomerContext.Provider value={{ customer, login, logout, addToCart, removeToCart }}>
       {children}
     </CustomerContext.Provider>
   );
