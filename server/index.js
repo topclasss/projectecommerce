@@ -1,17 +1,14 @@
-'use strict';
+"use strict";
 
-const express = require('express');
-const morgan = require('morgan');
+const express = require("express");
+const morgan = require("morgan");
 
-//Handlers import here
-const {
-  getProducts,
-  getProduct,
-  addCustomer,
-  getCustomerInfos,
-  addToCart,
-  removeFromCart
-} = require('./handlers')
+const getProducts = require("./handlers/getProducts");
+const getProduct = require("./handlers/getProduct");
+const addCustomer = require("./handlers/addCustomer");
+const getCustomerInfos = require("./handlers/getCustomerInfos");
+const addToCart = require("./handlers/addToCart");
+const removeFromCart = require("./handlers/removeFromCart");
 
 express()
   .use(express.json())
@@ -29,20 +26,14 @@ express()
   .patch("/add-to-cart", addToCart)
   .patch("/remove-from-cart", removeFromCart)
 
-
-
-
-
-
-
   // Catches all error response
   .get("*", (req, res) => {
     res.status(404).json({
-    status: 404,
-    message: "This is obviously not what you are looking for.",
+      status: 404,
+      message: "This is obviously not what you are looking for.",
     });
   })
 
   .listen(8000, () => {
-    console.log(`Server listening on port ${8000}`)
+    console.log(`Server listening on port ${8000}`);
   });
