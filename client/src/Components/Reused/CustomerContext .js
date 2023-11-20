@@ -34,6 +34,32 @@ const isProductInTheCart =  customer.cart.find((product) => {
   }
 }
 
+
+//Remove to cart
+
+/* const removeToCart = (productId) => {
+  const isProductInTheCart =  customer.cart.find((product) => {
+     return (product._id === productId)
+    })
+    if (isProductInTheCart && isProductInTheCart.quantity > 1) {
+      isProductInTheCart.quantity -= 1
+       const newCart = [...customer.cart]
+       setCustomer({...customer, cart:newCart })
+    }
+    else  {
+      if (isProductInTheCart && isProductInTheCart.quantity === 1) {
+      const remaningProduct =  customer.cart.filter((product) => {
+        return (product._id !== productId)
+      })
+      setCustomer({...customer, cart: remaningProduct })
+    }
+    }
+   } */
+  
+
+
+
+
 // Provide the CustomerContext to its children
   return (
     <CustomerContext.Provider value={{ customer, login, logout, addToCart }}>
