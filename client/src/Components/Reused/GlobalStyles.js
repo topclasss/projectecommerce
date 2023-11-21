@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import backgroundImage from "../../../src/image1.jpg";
+
 const GlobalStyle = createGlobalStyle`
     /* http://meyerweb.com/eric/tools/css/reset/ 
         v2.0 | 20110126
@@ -42,7 +44,10 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         line-height: 1;
-        background-color: lightgrey;
+        background-image: url(${backgroundImage});
+        background-size: cover; // You can use 'contain' or other values depending on your preference
+        background-position: center; // Adjust as needed
+        background-repeat: no-repeat;
     }
     ol, ul {
         list-style: none;

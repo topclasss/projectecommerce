@@ -51,9 +51,9 @@ const [errorMessage, setErrorMessage] = useState(null)
     // Structure of our page
     return (
       <Container>
-        <Title>Register</Title>
-        <Form>
-          <Label>
+      <Title style={{ color: 'white' }}>Register</Title>
+      <Form>
+        <Label style={{ color: 'black' }}>
             Email:
             <Input
               type="email"

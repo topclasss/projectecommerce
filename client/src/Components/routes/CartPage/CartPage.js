@@ -73,12 +73,16 @@ const CartPage = () => {
 export default CartPage;
 
 const cartContainerStyle = {
+  height: "100%",
   maxWidth: "600px",
   margin: "0 auto",
   padding: "20px",
-  color: "black",
+  color: "white",
   textAlign: "center",
   textDecoration: "none",
+  backgroundColor: '#333',
+  marginTop: '210px',
+  marginBottom: '210px'
 };
 
 const cartItemStyle = {
@@ -92,7 +96,7 @@ const cartLinksStyle = {
   marginTop: "20px",
   textDecoration: "none",
   fontWeight: "bold",
-  color: "black",
+  color: "white",
 };
 
 const checkoutButtonStyle = {
@@ -107,7 +111,7 @@ const checkoutButtonStyle = {
 //To ADD
 const removeButtonStyle = {
   backgroundColor: "black", 
-  color: "#fff",
+  color: "#333",
   padding: "10px 15px",
   border: "none",
   borderRadius: "4px",

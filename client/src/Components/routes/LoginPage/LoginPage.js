@@ -36,9 +36,9 @@ const LoginPage = () => {
   // Structure for our page
   return (
     <Container>
-      <Title>Login</Title>
+      <Title style={{ color: 'white' }}>Login</Title>
       <Form>
-        <Label>
+        <Label style={{ color: 'black' }}>
           Email:
           {/*field for the username */}
           <Input
