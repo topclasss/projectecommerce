@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import { useUser } from "../../Reused/CustomerContext ";
 import { Link } from "react-router-dom";
 import {handleRemoveFromCart} from "../../handlesCart/handleRemoveFromCart"
+import { ProductContext } from "../../Reused/ProductContext";
+import {useContext} from "react" 
 
 const CartPage = () => {
   // Get user information and functions from UserProvider
   const { customer, logout, removeToCart } = useUser();
+  const { products } = useContext(ProductContext);
 
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  //ADD setError
   const handleRemoveItem = async (productId) => {
-    await handleRemoveFromCart(productId, removeToCart, customer._id);
+    await handleRemoveFromCart(productId, removeToCart, customer._id, setErrorMessage);
     removeToCart(productId);
   };
 
@@ -17,16 +23,30 @@ const CartPage = () => {
       <h2>Shopping Cart</h2>
       {customer ? (
         customer.cart && customer.cart.length > 0 ? (
+       
           <div>
-            {customer.cart.map((item) => (
-              <div key={item._id} style={cartItemStyle}>
-                <p>Product Name: {item._id}</p>
+         
+             {customer.cart.map ((item) => {
+               const findProduct = products.find((product) => {
+               return product._id === Number(item._id) });
+              return ( 
+               <div key={item._id} style={cartItemStyle}>
+                <img src={findProduct.imageSrc} alt={item._id} />
+                <p>Product Name: {findProduct.name}</p> 
                 <p>Quantity: {item.quantity}</p>
-                <button onClick={() => handleRemoveItem(item._id)}>
+                <button style={removeButtonStyle} onClick={() => handleRemoveItem(item._id)}>
                   Remove Item
                 </button>
+                
+                { (!errorMessage) ? (
+                  <p></p>
+                ):( <p>{errorMessage} </p>)}
+
               </div>
-            ))}
+             )
+            })
+            }
+        
             <div style={checkoutButtonStyle}>
               <Link
                 to="/checkout"
@@ -85,4 +105,15 @@ const checkoutButtonStyle = {
   color: "white",
   padding: "10px 20px",
   borderRadius: "5px",
+};
+
+//To ADD
+const removeButtonStyle = {
+  backgroundColor: "black", 
+  color: "#fff",
+  padding: "10px 15px",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  margin: "10px",
 };

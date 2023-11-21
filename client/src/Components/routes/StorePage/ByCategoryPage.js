@@ -9,7 +9,7 @@ const ByCategoryPage = () => {
   const [disablePrevious, setDisablePrevious] = useState(true);
   const [disableNext, setDisableleNext] = useState(false);
   const [showFooter, setShowFooter ] = useState ("none");
-  const [categoryTitle, setCategoryTitle] = useState ("Shopping page by category")
+  const [categoryTitle, setCategoryTitle] = useState ("Category")
 
   return (
     <>
@@ -46,9 +46,25 @@ const Footer = styled.footer`
   margin-top: 40px;
   margin-bottom: 40px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 
   button {
     margin: 10px;
+  }
+
+  & button {
+  background-color: black; 
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 150px;
+  }
+
+  & p {
+    font-size: 20px;
   }
 `;

@@ -1,22 +1,19 @@
- 
- 
- export const handleRemoveFromCart = async (productId, removeToCart, customerId, setErrorMessage) => {
+
+export const GetCompanyId = async (companyNumber, setErrorMessage, setCompany) => {
     try{
-    const url = '/remove-from-cart'
-    const body = {customerId, productId}
-    
-    const response = await fetch(url, {
-        method: "PATCH",
+
+    const response = await fetch(`/get-company/${companyNumber}`, {
+        method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(body),
-        })
+            })
 
-      
+   
           const result = await response.json();
+
           if (result.status === 200) {
-            removeToCart(productId)
+                 setCompany(result.data.name)
             }else{
               setErrorMessage(result.message)
         }

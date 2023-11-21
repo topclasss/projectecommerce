@@ -52,6 +52,8 @@ const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext
   //Page setup
 
   return (
+    <>
+    {productsToDisplay ? (
     <MainGrid>
       {productsToDisplay ? (
         productsToDisplay.map((product) => {
@@ -65,10 +67,17 @@ const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext
             </ProductBox>
           );
         })
-      ) : (
-        <p>Loading</p>
+        ) : (
+          <></>
       )}
     </MainGrid>
+   ) : (
+    <Loading>Loading...</Loading>
+  )}
+</>
+
+
+
   );
 };
 
@@ -99,4 +108,9 @@ const ProductBox = styled(NavLink)`
   color: black;
   text-decoration: none;
 }
+`;
+
+const Loading = styled.h1`
+ text-align: center;
+  margin-bottom: 80px;
 `;
