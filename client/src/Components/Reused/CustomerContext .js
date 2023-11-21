@@ -56,13 +56,15 @@ const isProductInTheCart =  customer.cart.find((product) => {
     }
    } 
   
-
+const completePurchase = ((newProchaseObject) => {
+  setCustomer({...customer, cart: [], previousOrders: [...customer.previousOrders, newProchaseObject]})
+})
 
 
 
 // Provide the CustomerContext to its children
   return (
-    <CustomerContext.Provider value={{ customer, login, logout, addToCart, removeToCart }}>
+    <CustomerContext.Provider value={{ customer, login, logout, addToCart, removeToCart, completePurchase }}>
       {children}
     </CustomerContext.Provider>
   );

@@ -10,6 +10,7 @@ import { UserProvider, useUser } from './Reused/CustomerContext ';
 import CartPage from './routes/CartPage/CartPage';
 import Navbar from './Navbar';
 import CheckoutPage from './routes/CartPage/CheckoutPage';
+import OrderDetails from './routes/CartPage/OrderDetails'
 
 const App = () => {
   const [key, setKey] = useState(0);
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/product/:productId" element={<DetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage/>} />
+          <Route path="/order-details/:id" element={<OrderDetails/>} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
