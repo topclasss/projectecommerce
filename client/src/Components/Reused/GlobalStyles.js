@@ -6,6 +6,8 @@ const GlobalStyle = createGlobalStyle`
         License: none (public domain)
     */
 
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Press+Start+2P&family=Roboto&display=swap');
+
     html, body, div, span, applet, object, iframe,
     blockquote, pre,
     a, abbr, acronym, address, big, cite, code,
@@ -44,6 +46,12 @@ const GlobalStyle = createGlobalStyle`
     ol, ul {
         list-style: none;
     }
+    
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1;
+    }
+
     blockquote, q {
         quotes: none;
     }

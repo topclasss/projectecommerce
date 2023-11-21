@@ -59,6 +59,8 @@ const MainGrid = styled.main`
   justify-items: center;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
+  max-width: 600px;
+  margin: 100px 200px 200px 600px;
 `;
 
 const ProductBox = styled(NavLink)`

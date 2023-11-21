@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useUser } from "../../Reused/CustomerContext ";
 import { Link } from "react-router-dom";
+import {handleRemoveFromCart} from "../../handlesCart/handleRemoveFromCart"
 
 const CartPage = () => {
   // Get user information and functions from UserProvider
   const { customer, logout, removeToCart } = useUser();
 
-  const handleRemoveItem = (productId) => {
-    // call removeToCart function from context
+  const handleRemoveItem = async (productId) => {
+    await handleRemoveFromCart(productId, removeToCart, customer._id);
     removeToCart(productId);
   };
 
@@ -46,7 +47,7 @@ const CartPage = () => {
         </div>
       )}
       <div style={cartLinksStyle}>
-        <Link to="/store">Continue Shopping</Link>
+        <Link to="/">Continue Shopping</Link>
       </div>
     </div>
   );
