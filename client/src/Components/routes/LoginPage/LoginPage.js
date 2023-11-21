@@ -13,7 +13,6 @@ import {
 } from '../../Reused/styledComponents';
 import { Link } from 'react-router-dom';
 import { handleSubmit } from '../../handleSubmit/authenticationService';
-//import { useUser } from '../../Reused/CustomerContext ';
 import { useNavigate } from 'react-router-dom';
 import { CustomerContext } from '../../Reused/CustomerContext ';
 

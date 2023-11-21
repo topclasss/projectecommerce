@@ -66,7 +66,7 @@ const MainGrid = styled.main`
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   max-width: 600px;
-  margin: 0 200px 200px 460px;
+  margin: 0 200px 200px 330px;
   
 `;
 

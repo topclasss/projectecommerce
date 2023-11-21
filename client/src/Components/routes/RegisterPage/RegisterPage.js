@@ -26,8 +26,6 @@ const RegisterPage = () => {
     const navigate = useNavigate()
 const [errorMessage, setErrorMessage] = useState(null)
 
- //let errorMessageArray = []
-
 
 
     // Function to handle the form submission when the user wants to register
@@ -37,8 +35,7 @@ const [errorMessage, setErrorMessage] = useState(null)
           setErrorMessage("Passwords do not match")
            return;
       }
-      //console.log("errorMessage", errorMessage)
-      const cartData = [];
+       const cartData = [];
       
 
       // Call your authentication service with the required parameters
