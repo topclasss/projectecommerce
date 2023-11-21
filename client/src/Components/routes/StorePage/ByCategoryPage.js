@@ -36,7 +36,9 @@ export default ByCategoryPage;
 
 const Title = styled.h1`
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
+  margin-top: 60px;
+  color: #333;
 `;
 
 const Footer = styled.footer`

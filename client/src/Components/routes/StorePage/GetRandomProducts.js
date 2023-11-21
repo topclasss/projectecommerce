@@ -20,7 +20,7 @@ const GetRandomProducts = () => {
       const mixedProductsArray = [...products].sort(() => {
         return Math.random() - 0.5;
       });
-      const nomberOfProductsToDisplay = 6;
+      const nomberOfProductsToDisplay = 10;
       const productsToDisplay = mixedProductsArray.slice(
         0,
         nomberOfProductsToDisplay
@@ -58,19 +58,23 @@ const MainGrid = styled.main`
   display: grid;
   justify-items: center;
   grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   max-width: 600px;
-  margin: 100px 200px 200px 600px;
+  margin: 0 200px 200px 460px;
+  
 `;
 
 const ProductBox = styled(NavLink)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid 2px;
-  margin: 20px;
+  margin: 10px;
   color: black;
   text-decoration: none;
+  min-width: 180px;
+  background-color: white;
+  
+  ;
 
   &.active {
     color: black;

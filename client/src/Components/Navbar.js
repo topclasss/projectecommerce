@@ -18,7 +18,7 @@ const Navbar = ({ onNavigate }) => {
   const linkStyle = {
     color: "white",
     textDecoration: "none",
-    margin: "0 10px",
+    margin: "0 30px",
     transition: "padding 0.2s",
   };
 
@@ -30,6 +30,7 @@ const Navbar = ({ onNavigate }) => {
     transform: "translateX(-50%)",
     backgroundColor: "#333",
     padding: "15px",
+    textAlign: "center",
   };
 
   const handleCategoryHover = () => {
@@ -48,7 +49,7 @@ const Navbar = ({ onNavigate }) => {
 
   return (
     <nav style={navbarStyle}>
-      <div style={{ color: "lightgrey", marginRight: "10px" }}>Store Name</div>
+      <div style={{ color: "lightgrey", marginLeft: "10px" }}>TechTrove</div>
       <Link to="/" style={linkStyle}>
         Home
       </Link>
