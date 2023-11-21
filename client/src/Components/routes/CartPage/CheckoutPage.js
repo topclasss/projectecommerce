@@ -125,64 +125,93 @@ const CheckoutPage = () => {
 
     // checkoutpage component
     return (
-      <div style={checkoutContainerStyle}>
-        <h2>Checkout</h2>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Country:
-            <input
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Address:
-            <textarea
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Postal Code:
-            <input
-              type="text"
-              name="postalCode"
-              value={formData.postalCode}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            Province/State:
-            <input
-              type="text"
-              name="provinceState"
-              value={formData.provinceState}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <br />
-          <button type="submit">Submit Order</button>
-        </form>
-      </div>
-    );
-  };
-  
-  const checkoutContainerStyle = {
-    maxWidth: "600px",
-    margin: "0 auto",
-    padding: "20px",
-    color: "black",
-    textAlign: "center",
-  };
-  
-  export default CheckoutPage;
+    <div style={checkoutContainerStyle}>
+      <h2>Checkout</h2>
+      <form onSubmit={handleSubmit} style={formStyle}>
+        <label>
+          Country:
+          <input
+            type="text"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
+        </label>
+        <br />
+        <label>
+          Address:
+          <textarea
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
+        </label>
+        <br />
+        <label>
+          Postal Code:
+          <input
+            type="text"
+            name="postalCode"
+            value={formData.postalCode}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
+        </label>
+        <br />
+        <label>
+          Province/State:
+          <input
+            type="text"
+            name="provinceState"
+            value={formData.provinceState}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
+        </label>
+        <br />
+        <button type="submit" style={buttonStyle}>
+          Submit Order
+        </button>
+      </form>
+    </div>
+  );
+};
+
+const checkoutContainerStyle = {
+  maxWidth: "600px",
+  margin: "0 auto",
+  padding: "20px",
+  color: "black",
+  textAlign: "center",
+};
+
+const formStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+};
+
+const inputStyle = {
+  margin: "8px 0",
+  padding: "8px",
+  width: "100%",
+  boxSizing: "border-box",
+  maxWidth: '250px'
+};
+
+const buttonStyle = {
+  backgroundColor: "#333",
+  color: "white",
+  padding: "10px",
+  cursor: "pointer",
+  borderRadius: "5px",
+  border: "none",
+};
+
+export default CheckoutPage;
