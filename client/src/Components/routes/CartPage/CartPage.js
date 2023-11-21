@@ -10,12 +10,11 @@ const CartPage = () => {
   const { customer, logout, removeToCart } = useUser();
   const { products } = useContext(ProductContext);
 
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage] = useState(null)
 
   //ADD setError
   const handleRemoveItem = async (productId) => {
-    await handleRemoveFromCart(productId, removeToCart, customer._id, setErrorMessage);
-    removeToCart(productId);
+    const updatedCart = await handleRemoveFromCart(productId, removeToCart, customer._id);
   };
 
   return (
