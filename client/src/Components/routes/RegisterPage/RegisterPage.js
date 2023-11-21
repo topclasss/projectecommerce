@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Container,
   Title,
@@ -16,7 +16,7 @@ import { CustomerContext } from '../../Reused/CustomerContext ';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
-    // State variables to keep track of the form fields
+    // State variables to keep track of the form fields // And error message
     const [email, setEmail] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -24,28 +24,33 @@ const RegisterPage = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const {login} = useContext(CustomerContext)
     const navigate = useNavigate()
-  
+const [errorMessage, setErrorMessage] = useState(null)
+
+ //let errorMessageArray = []
+
+
+
     // Function to handle the form submission when the user wants to register
     const handleRegisterSubmit = async () => {
       // Check if password and confirm password match
       if (password !== confirmPassword) {
-        console.error('Passwords do not match');
-        return;
+          setErrorMessage("Passwords do not match")
+           return;
       }
-  
+      //console.log("errorMessage", errorMessage)
       const cartData = [];
+      
 
       // Call your authentication service with the required parameters
       try {
-        const customerInfo = await handleSubmit(false, email, password, firstName, lastName, cartData, login, navigate);
+        const customerInfo = await handleSubmit(false, email, password, firstName, lastName, cartData, login, navigate, setErrorMessage);
         //login(customerInfo); // Call login function to set customer information
         // Handle successful registration, redirect, etc...
-        console.log('Registration successful');
       } catch (error) {
-        console.error('Error during registration:', error);
+        setErrorMessage('Error during registration:', error);
       }
     };
-  
+ 
     // Structure of our page
     return (
       <Container>
@@ -83,7 +88,7 @@ const RegisterPage = () => {
             <Input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {setPassword(e.target.value), setErrorMessage("")}}
             />
           </Label>
           <br />
@@ -92,14 +97,21 @@ const RegisterPage = () => {
             <Input
               type="password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => {setConfirmPassword(e.target.value), setErrorMessage("")}}
             />
           </Label>
           <br />
           <Button type="button" onClick={handleRegisterSubmit}>
             Register
           </Button>
+
+          { (!errorMessage) ? (
+           <p></p>
+        ):( <p>{errorMessage} </p>
+        )}
+
         </Form>
+
         <Paragraph>
           <StyledSpan>
             Already have an account? Login <Link to="/login">here</Link>.

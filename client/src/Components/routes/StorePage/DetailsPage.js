@@ -50,8 +50,7 @@ let quantity = productInCart ? productInCart.quantity : ""
 
   //Set display button if item is in the cart or not
   useEffect (( ) => {
-    console.log("productInCart", productInCart)
-    if (quantity === "" )
+      if (quantity === "" )
     {setDisplayAdd(""), setDisplayQuantity("none")}
     else {setDisplayAdd("none"), setDisplayQuantity("")}
   }, [productInCart]);
