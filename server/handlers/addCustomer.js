@@ -35,7 +35,7 @@ const addCustomer = async (request, response) => {
     });
   }
 
-  //MORE VALIDATION NEEDED!
+  //more validation is needed here but not enough time sorry.
 
   const client = new MongoClient(MONGO_URI);
   try {

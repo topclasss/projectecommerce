@@ -108,7 +108,7 @@ const createOrder = async (request, response) => {
         _id: dbProduct._id,
         name: dbProduct.name,
         price: dbProduct.price,
-        // imageSrc: dbProduct.imageSrc,
+        imageSrc: dbProduct.imageSrc,
       });
     });
 
@@ -128,7 +128,7 @@ const createOrder = async (request, response) => {
 
     const updateConfirmations = await Promise.all(updateStocks);
 
-    //log its there was a problem with the update
+    //log if there was a problem with the update
     updateConfirmations.forEach((confirmation) => {
       confirmation.modifiedCount === 0 &&
         console.log("An item stock number wasn't updated correctly");
