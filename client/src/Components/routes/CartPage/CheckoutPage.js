@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { useUser } from '../../Reused/CustomerContext ';
+import React, { useState, useContext } from "react"
+import { CustomerContext } from '../../Reused/CustomerContext ';
+import {useNavigate} from 'react-router-dom'
 
 const CheckoutPage = () => {
     // retrieve user information and removeToCart function from context
-    const { customer, removeToCart } = useUser();
-  
+    const { customer, removeToCart, completePurchase } = useContext(CustomerContext);
+    const navigate = useNavigate()
     // form data
     const [formData, setFormData] = useState({
       country: "",
@@ -106,14 +107,17 @@ const CheckoutPage = () => {
         const responseData = await response.json();
         console.log(responseData);
   
-        window.alert("Order confirmed!");
+        // window.alert("Order confirmed!");
+        completePurchase(responseData.data)
 
-      await handleRemoveAllFromCart();
+        navigate(`/order-details/${responseData.data._id}`)
+
+      // await handleRemoveAllFromCart();
 
       // redirect to "/" after a delay
-      setTimeout(() => {
-        window.location.replace("/");
-      }, 1000); 
+      // setTimeout(() => {
+      //   window.location.replace("/");
+      // }, 1000); 
     } catch (error) {
       console.error("Error creating order:", error);
     }

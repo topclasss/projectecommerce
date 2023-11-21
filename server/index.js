@@ -11,6 +11,7 @@ const addToCart = require("./handlers/addToCart");
 const removeFromCart = require("./handlers/removeFromCart");
 const getCompany = require("./handlers/getCompany")
 const createOrder = require("./handlers/createOrder")
+const getOrderDetails = require("./handlers/getOrderDetails")
 
 express()
   .use(express.json())
@@ -29,6 +30,7 @@ express()
   .patch("/add-to-cart", addToCart)
   .patch("/remove-from-cart", removeFromCart)
   .post("/create-order", createOrder)
+  .get("/order-details/:id", getOrderDetails)
 
 
   // Catches all error response
