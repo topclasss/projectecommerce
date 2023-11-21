@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react"
 import { CustomerContext } from '../../Reused/CustomerContext ';
+import { ProductContext } from "../../Reused/ProductContext";
 import {useNavigate} from 'react-router-dom'
 
 const CheckoutPage = () => {
     // retrieve user information and removeToCart function from context
     const { customer, removeToCart, completePurchase } = useContext(CustomerContext);
+    const {products} = useContext(ProductContext)
     const navigate = useNavigate()
     // form data
     const [formData, setFormData] = useState({
@@ -22,7 +24,8 @@ const CheckoutPage = () => {
         [name]: value,
       }));
     };
-  
+    
+    // this is not supposed to be here
      // handle remove item from cart
     const handleRemoveFromCart = async (productId, customerId) => {
       try {
@@ -54,6 +57,7 @@ const CheckoutPage = () => {
       }
     };
   
+    // this is not supposed to be here
     // handle removal of all items from the cart checkout
     const handleRemoveAllFromCart = async () => {
       const removalPromises = customer.cart.map((item) =>
@@ -123,23 +127,29 @@ const CheckoutPage = () => {
     }
   };
 
+
+
+    console.log(Number(customer.cart[0]._id));
+    console.log(products[0]._id);
+
+    const cartProductsDetails = []
+    customer.cart.forEach(cartProduct => {
+      const productDetails = products.find((dbProduct)=> {
+        return dbProduct._id === Number(cartProduct._id)
+      })
+      cartProductsDetails.push(productDetails)
+    });
+    console.log(cartProductsDetails);
+
+
+
+
     // checkoutpage component
     return (
     <div style={checkoutContainerStyle}>
       <h2>Checkout</h2>
       <form onSubmit={handleSubmit} style={formStyle}>
-        <label>
-          Country:
-          <input
-            type="text"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            required
-            style={inputStyle}
-          />
-        </label>
-        <br />
+        <p>Name: <br/>{customer.firstName} {customer.lastName}</p>
         <label>
           Address:
           <textarea
@@ -175,6 +185,28 @@ const CheckoutPage = () => {
           />
         </label>
         <br />
+        <label>
+          Country:
+          <input
+            type="text"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          />
+        </label>
+        <br />
+        <ol>
+          {cartProductsDetails.map(product => {
+            return <li key={product._id}>
+              <p>-------------</p>
+              <p>name:{product.name.slice(0, 20)}</p>
+              <p>price: {product.price}</p>
+              <img style={{width: "100px"}}src={product.imageSrc}></img>
+            </li>
+          })}
+        </ol>
         <button type="submit" style={buttonStyle}>
           Submit Order
         </button>
