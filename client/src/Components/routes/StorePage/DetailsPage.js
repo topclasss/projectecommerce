@@ -52,9 +52,9 @@ let quantity = productInCart ? productInCart.quantity : ""
       setCompanyNumber(productSelected.companyId)
      
      if (productSelected.numInStock === 0)
-          {setAddButtonDisable(true)}
+            {setAddButtonDisable(true)}
 
-          if (companyNumber !== null)
+            if (companyNumber !== null)
           {handlecompany()}
     }
   }, [products, companyNumber]);
@@ -118,7 +118,7 @@ const handleUserNotLog = () => {
             <ButtonBox>    
 
              {!customer  ? (
-                <button onClick={handleUserNotLog}>Add to cart</button>
+                <button onClick={handleUserNotLog} disabled={addButtonDisable}>Add to cart</button>
               ): (
             <button onClick={handleAdd} disabled={addButtonDisable}  style={{display: displayAdd}}>Add to cart</button>
           )}
@@ -162,7 +162,7 @@ display: flex;
 justify-content: space-evenly;
 align-items: center;
 
-& button {
+button {
   background-color: black; 
   color: #fff;
   padding: 10px 15px;
@@ -170,7 +170,11 @@ align-items: center;
   border-radius: 4px;
   cursor: pointer;
   margin: 10px;
-}
+
+  &:disabled{
+    opacity: 0.2
+  }
+} 
   & p {
     font-size: 20px;
   }

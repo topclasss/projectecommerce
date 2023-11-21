@@ -32,7 +32,7 @@ const [errorMessage, setErrorMessage] = useState(null)
     const handleRegisterSubmit = async () => {
       // Check if password and confirm password match
       if (password !== confirmPassword) {
-          setErrorMessage("Passwords do not match")
+        setErrorMessage("Password and password confirmation do not match")
            return;
       }
        const cartData = [];
