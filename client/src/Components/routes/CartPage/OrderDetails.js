@@ -58,6 +58,7 @@ const OrderDetails = () => {
 export default OrderDetails;
 
 const OrderDetailsWrapper = styled.div`
+  color:white;
   display: flex;
   justify-content: center;
   margin-top:20vh;
