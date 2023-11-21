@@ -127,23 +127,24 @@ const createOrder = async (request, response) => {
     });
 
     const updateConfirmations = await Promise.all(updateStocks);
-    
+
     //log its there was a problem with the update
-    updateConfirmations.forEach((confirmation)=> {
-      confirmation.modifiedCount === 0 && console.log("An item stock number wasn't updated correctly");
-    })
+    updateConfirmations.forEach((confirmation) => {
+      confirmation.modifiedCount === 0 &&
+        console.log("An item stock number wasn't updated correctly");
+    });
 
     //push order document in orders collection
     await db.collection("orders").insertOne(order);
 
     //update customer document by clearing cart
-    await db
-      .collection("customer")
+    const result1 = await db
+      .collection("customers")
       .updateOne({ _id: customerId }, { $set: { cart: [] } });
 
     //update customer adding this order to previousOrders
-    await db
-      .collection("customer")
+    const result2 = await db
+      .collection("customers")
       .updateOne({ _id: customerId }, { $push: { previousOrder: order } });
 
     //respond to the client with an order id
