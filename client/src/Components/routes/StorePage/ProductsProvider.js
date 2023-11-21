@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState(null);
-  console.log("products", products)
 
   useEffect(() => {
     fetch("/get-products")
