@@ -9,7 +9,7 @@ import DetailsPage from "./routes/StorePage/DetailsPage"
 import { UserProvider, useUser } from './Reused/CustomerContext ';
 import CartPage from './routes/CartPage/CartPage';
 import Navbar from './Navbar';
-
+import CheckoutPage from './routes/CartPage/CheckoutPage';
 
 const App = () => {
   const [key, setKey] = useState(0);
@@ -30,6 +30,7 @@ const App = () => {
           <Route path="/store/:categoryId" element={<ByCategoryPage />} />
           <Route path="/product/:productId" element={<DetailsPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage/>} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
