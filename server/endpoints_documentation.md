@@ -92,3 +92,32 @@ message: {
   or
   "quantity of existing product successfully decreased"
 }
+
+/create-order
+expect:
+body: {
+    customerId: "",
+    address: "",
+    postalCode: "",
+    provinceState: "",
+    country: "",
+}
+returns:
+data: {
+    _id: "",
+    orderDate: "",
+    customerId: "",
+    buyerName: "",
+    address: "",
+    postalCode: "",
+    provinceState: "",
+    country: "",
+    shoppingBag: [
+      {
+        _id: "",
+        name: "",
+        price: "",
+        imageSrc: "",
+      }
+    ]
+}
