@@ -17,12 +17,6 @@ export const handleSubmit = async (isLogin, email, password, firstName, lastName
     });
 
  
-/*     if (!response.ok) {
-      //throw new Error(`${isLogin ? 'Login' : 'Registration'} failed`);
-      setErrorMessage(result.message)
-    console.log("message", result.message) 
-    console.log("status", result.status)}
-    }  */
 
 
     const result = await response.json();

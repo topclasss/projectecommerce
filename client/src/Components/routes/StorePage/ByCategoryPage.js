@@ -43,16 +43,13 @@ const Title = styled.h1`
 
 const Footer = styled.footer`
   text-align: center;
-  margin-top: 40px;
+  margin-top: 10px;
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
 
-  button {
-    margin: 10px;
-  }
 
-  & button {
+  button {
   background-color: black; 
   color: #fff;
   padding: 10px 15px;

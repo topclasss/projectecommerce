@@ -87,10 +87,17 @@ const MainGrid = styled.main`
   display: grid;
   justify-items: center;
   grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  max-width: 600px;
-  margin: 0 100px 200px 250px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  max-width: fit-content;
+  margin: 0 auto 100px auto;
   
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr ;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr ;
+  }
   
 `;
 

@@ -9,12 +9,10 @@ const CartPage = () => {
   // Get user information and functions from UserProvider
   const { customer, logout, removeToCart } = useUser();
   const { products } = useContext(ProductContext);
+  const [errorMessage, setErrorMessage] = useState(null)
 
-  const [errorMessage] = useState(null)
-
-  //ADD setError
   const handleRemoveItem = async (productId) => {
-    const updatedCart = await handleRemoveFromCart(productId, removeToCart, customer._id);
+    const updatedCart = await handleRemoveFromCart(productId, removeToCart, customer._id, setErrorMessage);
   };
 
   return (
