@@ -146,15 +146,19 @@ const ProductBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid 2px;
   max-width: 800px;
  margin-left: 430px;
+ background-color: white;
   
 `;
 
 const Title = styled.h1`
   text-align: center;
   margin-bottom: 80px;
+  background-color: #333;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: white;
 `;
 
 const ButtonBox = styled.div`

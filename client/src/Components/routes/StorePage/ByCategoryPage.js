@@ -13,6 +13,7 @@ const ByCategoryPage = () => {
 
   return (
     <>
+    <StyledStorePage>
       <Title>{categoryTitle}</Title>
       <main>
         <GetProductsByCategory
@@ -28,6 +29,7 @@ const ByCategoryPage = () => {
         <p style={{ display: showFooter }}>{pageNumber}</p>
         <button  style={{ display: showFooter }} disabled={disableNext} onClick={() => {setPageNumber(pageNumber + 1);}}>Next Page</button>
       </Footer>
+      </StyledStorePage>
     </>
   );
 };
@@ -38,7 +40,10 @@ const Title = styled.h1`
   text-align: center;
   margin-bottom: 60px;
   margin-top: 60px;
-  color: #333;
+  color: white;
+  background-color: #333;
+  padding-top: 20px;
+  padding-bottom: 20px;
 `;
 
 const Footer = styled.footer`
@@ -64,4 +69,9 @@ const Footer = styled.footer`
   & p {
     font-size: 20px;
   }
+`;
+
+const StyledStorePage = styled.div`
+background-color: white;
+
 `;
