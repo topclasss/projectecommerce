@@ -7,17 +7,18 @@ import styled from "styled-components";
 import { handleAddToCart } from "../../handlesCart/handleAddToCart";
 import {handleRemoveFromCart} from "../../handlesCart/handleRemoveFromCart"
 import {CustomerContext} from "../../Reused/CustomerContext "
+import { useNavigate } from "react-router-dom";
 
 const DetailsPage = ({}) => {
  //Get variables from Context and Params 
   const { products } = useContext(ProductContext);
   const { productId } = useParams();
   const {customer, addToCart, removeToCart} = useContext(CustomerContext)
+  const navigate = useNavigate()
 
  //State variable for product info to display and button disable/display
   const [productInfo, setproductInfo] = useState(null);
-  const [addButtonDisable, setAddButtonDisable] = useState(true)
-  const [logged, setLogged] = useState(false)
+  const [addButtonDisable, setAddButtonDisable] = useState(false)
   const [displayAdd, setDisplayAdd] = useState ("")
   const [displayQuantity, setDisplayQuantity] = useState ("none")
   const [plusMinusButtonDisable, setPlusMinusButtonDisable] = useState(false)
@@ -29,10 +30,10 @@ const DetailsPage = ({}) => {
 if (product._id === productId)
 return true
     })
-   }
-console.log(productInCart)
+    }
 
 let quantity = productInCart ? productInCart.quantity : "" 
+
 
 //Find the selected product from all products
   useEffect(() => {
@@ -41,16 +42,22 @@ let quantity = productInCart ? productInCart.quantity : ""
         if (product._id === Number(productId)) return product;
       });
       setproductInfo(productSelected);
+
+      if (productSelected.numInStock === 0)
+          {setAddButtonDisable(true)}
     }
   }, [products]);
 
-//Change button name if user is logged
-useEffect(() => {
-  if (customer !== null) {
-    setLogged(true);
-    setAddButtonDisable(false)
-  }
-}, [customer]); 
+  //Set display button if item is in the cart or not
+  useEffect (( ) => {
+    console.log("productInCart", productInCart)
+    if (quantity === "" )
+    {setDisplayAdd(""), setDisplayQuantity("none")}
+    else {setDisplayAdd("none"), setDisplayQuantity("")}
+  }, [productInCart]);
+  
+
+
 
 //Add product to MongoDB and cart and set buttons display
 const handleAdd = async () => {
@@ -72,6 +79,10 @@ const handleRemove = async () => {
   setPlusMinusButtonDisable (false)
 };
 
+//If user not log navigate to login page
+const handleUserNotLog = () => {
+  {navigate("/login")}
+}
 
 
   //Page setup
@@ -89,16 +100,22 @@ const handleRemove = async () => {
             <img src={productInfo.imageSrc} />
             <p>Stock: {productInfo.numInStock}</p>
             <p>Company: {productInfo.companyId}</p>
-            <ButtonBox>
-            <button onClick={handleAdd} disabled={addButtonDisable}  style={{display: displayAdd}}>{ logged ? "Add to cart" : "Please log in or sign in before adding to cart"}</button>
-          
+            <ButtonBox>    
+
+             {!customer  ? (
+                <button onClick={handleUserNotLog}>Add to cart</button>
+              ): (
+            <button onClick={handleAdd} disabled={addButtonDisable}  style={{display: displayAdd}}>Add to cart</button>
+          )}
+
+
             <button onClick={handleRemove} disabled={plusMinusButtonDisable}  style={{ display: displayQuantity }}>{ "-" }</button>
             <p style={{ display: displayQuantity }} > {quantity}  </p>
             <button onClick={handleAdd} disabled={plusMinusButtonDisable} style={{ display: displayQuantity }}>{ "+" }</button>
             </ButtonBox>
           </ProductBox>
         ) : (
-          <p>Searching</p>
+          <p>Loading</p>
         )}
       </main>
     </>

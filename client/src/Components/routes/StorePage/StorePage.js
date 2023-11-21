@@ -6,7 +6,7 @@ import GetRandomProducts from "./GetRandomProducts";
 const StorePage = () => {
   return (
     <>
-      <Title>Shopping page</Title>
+      <Title>Features products</Title>
       <main>
         <GetRandomProducts />
       </main>
