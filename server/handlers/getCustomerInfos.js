@@ -25,21 +25,27 @@ const getCustomerInfos = async (request, response) => {
       .collection("customers")
       .findOne({ email: email })
 
-    
-
-    // check if email and password match. result error if not. Delete password key from data if valid.
-    if (email === customerInfos.email && password === customerInfos.password) {
+    //check if account exists
+    if(!customerInfos){
+      return response.status(400).json({
+        status: 400,
+        data: request.body.email,
+        message: "This email is not associated with any account",
+      });
+    }
+    // validate if password match
+    if (password === customerInfos.password) {
       delete customerInfos.password;
     } else {
       return response.status(400).json({
         status: 400,
-        data: request.body,
-        message: "invalide email or password",
+        data: request.body.email,
+        message: "invalide password",
       });
     }
 
-    //MORE VALIDATION NEEDED!
-    //the result array should not have more then one result with the same email
+    //more validation is needed but not enough time sorry!
+    //we should use find instead of findOne and check if there array is larger then 1. There should not be more then one account with the same email
 
     response.status(201).json({
       status: 201,
