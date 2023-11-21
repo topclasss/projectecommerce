@@ -46,7 +46,7 @@ const LoginPage = () => {
           required 
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {setEmail(e.target.value), setErrorMessage("") }}
           />
         </Label>
         <br />
@@ -57,7 +57,7 @@ const LoginPage = () => {
           required 
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {setPassword(e.target.value), setErrorMessage("")}}
           />
         </Label>
         <br />

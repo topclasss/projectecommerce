@@ -8,20 +8,25 @@ import { handleAddToCart } from "../../handlesCart/handleAddToCart";
 import {handleRemoveFromCart} from "../../handlesCart/handleRemoveFromCart"
 import {CustomerContext} from "../../Reused/CustomerContext "
 import { useNavigate } from "react-router-dom";
+import { GetCompanyId } from "./GetCompanyId";
 
 const DetailsPage = ({}) => {
  //Get variables from Context and Params 
   const { products } = useContext(ProductContext);
   const { productId } = useParams();
+  const params = useParams();
   const {customer, addToCart, removeToCart} = useContext(CustomerContext)
   const navigate = useNavigate()
 
- //State variable for product info to display and button disable/display
+ //State variable for product info to display and button disable/display // And error messages
   const [productInfo, setproductInfo] = useState(null);
   const [addButtonDisable, setAddButtonDisable] = useState(false)
   const [displayAdd, setDisplayAdd] = useState ("")
   const [displayQuantity, setDisplayQuantity] = useState ("none")
   const [plusMinusButtonDisable, setPlusMinusButtonDisable] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [company, setCompany] = useState(null)
+const [companyNumber, setCompanyNumber] = useState(null)
 
 
   let productInCart = false
@@ -35,6 +40,8 @@ return true
 let quantity = productInCart ? productInCart.quantity : "" 
 
 
+
+
 //Find the selected product from all products
   useEffect(() => {
     if (products !== null) {
@@ -42,11 +49,15 @@ let quantity = productInCart ? productInCart.quantity : ""
         if (product._id === Number(productId)) return product;
       });
       setproductInfo(productSelected);
-
-      if (productSelected.numInStock === 0)
+      setCompanyNumber(productSelected.companyId)
+     
+     if (productSelected.numInStock === 0)
           {setAddButtonDisable(true)}
+
+          if (companyNumber !== null)
+          {handlecompany()}
     }
-  }, [products]);
+  }, [products, companyNumber]);
 
   //Set display button if item is in the cart or not
   useEffect (( ) => {
@@ -56,13 +67,17 @@ let quantity = productInCart ? productInCart.quantity : ""
   }, [productInCart]);
   
 
+  const handlecompany= async () => {
+    await GetCompanyId(companyNumber, setErrorMessage, setCompany);   
+   };
 
 
 //Add product to MongoDB and cart and set buttons display
 const handleAdd = async () => {
   setAddButtonDisable(true)
   setPlusMinusButtonDisable (true)
-  await handleAddToCart(productId, addToCart, customer._id);   
+  setErrorMessage("")
+  await handleAddToCart(productId, addToCart, customer._id, setErrorMessage);   
   setAddButtonDisable(false)
   setDisplayAdd("none")
   setDisplayQuantity(" ")
@@ -73,7 +88,8 @@ const handleAdd = async () => {
 const handleRemove = async () => {
   setPlusMinusButtonDisable (true)
   setDisplayAdd("none")
-   await handleRemoveFromCart(productId, removeToCart, customer._id);   
+  setErrorMessage("")
+   await handleRemoveFromCart(productId, removeToCart, customer._id, setErrorMessage);   
    setDisplayQuantity(" ")
   setPlusMinusButtonDisable (false)
 };
@@ -98,7 +114,7 @@ const handleUserNotLog = () => {
             <p>Product id: {productInfo._id}</p>
             <img src={productInfo.imageSrc} />
             <p>Stock: {productInfo.numInStock}</p>
-            <p>Company: {productInfo.companyId}</p>
+            <p>Company: {company}</p>
             <ButtonBox>    
 
              {!customer  ? (
@@ -107,14 +123,17 @@ const handleUserNotLog = () => {
             <button onClick={handleAdd} disabled={addButtonDisable}  style={{display: displayAdd}}>Add to cart</button>
           )}
 
-
             <button onClick={handleRemove} disabled={plusMinusButtonDisable}  style={{ display: displayQuantity }}>{ "-" }</button>
             <p style={{ display: displayQuantity }} > {quantity}  </p>
             <button onClick={handleAdd} disabled={plusMinusButtonDisable} style={{ display: displayQuantity }}>{ "+" }</button>
             </ButtonBox>
+            { (!errorMessage) ? (
+           <p></p>
+        ):( <p>{errorMessage} </p>
+        )}
           </ProductBox>
         ) : (
-          <p>Loading</p>
+          <Loading>Loading...</Loading>
         )}
       </main>
     </>
@@ -128,7 +147,9 @@ const ProductBox = styled.div`
   flex-direction: column;
   align-items: center;
   border: solid 2px;
-  margin: 20px;
+  max-width: 800px;
+ margin-left: 430px;
+  
 `;
 
 const Title = styled.h1`
@@ -139,4 +160,23 @@ const Title = styled.h1`
 const ButtonBox = styled.div`
 display: flex;
 justify-content: space-evenly;
-`
+align-items: center;
+
+& button {
+  background-color: black; 
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+}
+  & p {
+    font-size: 20px;
+  }
+`;
+
+const Loading = styled.h1`
+ text-align: center;
+  margin-bottom: 80px;
+`;

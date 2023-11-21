@@ -61,7 +61,7 @@ const [errorMessage, setErrorMessage] = useState(null)
             <Input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {setEmail(e.target.value), setErrorMessage("")}}
             />
           </Label>
           <br />
@@ -70,7 +70,7 @@ const [errorMessage, setErrorMessage] = useState(null)
             <Input
               type="text"
               value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => {setFirstName(e.target.value), setErrorMessage("")}}
             />
           </Label>
           <br />
@@ -79,7 +79,7 @@ const [errorMessage, setErrorMessage] = useState(null)
             <Input
               type="text"
               value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => {setLastName(e.target.value), setErrorMessage("")}}
             />
           </Label>
           <br />
