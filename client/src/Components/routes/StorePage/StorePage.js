@@ -18,5 +18,7 @@ export default StorePage;
 
 const Title = styled.h1`
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
+  margin-top: 60px;
+  color: #333;
 `;
