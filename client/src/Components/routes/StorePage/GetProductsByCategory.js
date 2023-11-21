@@ -66,7 +66,7 @@ const GetProductsByCategory = ({pageNumber, setDisablePrevious, setDisableleNext
           );
         })
       ) : (
-        <p>Searching</p>
+        <p>Loading</p>
       )}
     </MainGrid>
   );
@@ -87,4 +87,11 @@ const ProductBox = styled(NavLink)`
   align-items: center;
   border: solid 2px;
   margin: 20px;
+  color: black;
+  text-decoration: none;
+
+&.active {
+  color: black;
+  text-decoration: none;
+}
 `;
