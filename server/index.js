@@ -10,6 +10,7 @@ const getCustomerInfos = require("./handlers/getCustomerInfos");
 const addToCart = require("./handlers/addToCart");
 const removeFromCart = require("./handlers/removeFromCart");
 const getCompany = require("./handlers/getCompany")
+const createOrder = require("./handlers/createOrder")
 
 express()
   .use(express.json())
@@ -22,11 +23,13 @@ express()
 
   .get("/get-products", getProducts)
   .get("/get-product/:id", getProduct)
+  .get("/get-company/:id", getCompany)
   .post("/add-customer", addCustomer)
   .post("/get-customer-infos", getCustomerInfos)
   .patch("/add-to-cart", addToCart)
   .patch("/remove-from-cart", removeFromCart)
-  .get("/get-company/:id", getCompany)
+  .post("/create-order", createOrder)
+
 
   // Catches all error response
   .get("*", (req, res) => {

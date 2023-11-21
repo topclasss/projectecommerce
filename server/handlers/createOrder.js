@@ -5,22 +5,15 @@ const { MONGO_URI } = process.env;
 const { v4: uuidv4 } = require("uuid");
 
 const createOrder = async (request, response) => {
-  const {
-    customerId,
-    deliveryName,
-    address,
-    postalCode,
-    provinceState,
-    country,
-  } = request.body;
+  const { customerId, address, postalCode, provinceState, country } =
+    request.body;
 
   //build the order object
   let order = {
     _id: uuidv4(),
     orderDate: new Date(),
     customerId: customerId,
-    buyerName: "",
-    deliveryName: deliveryName,
+    buyerName: "place holder",
     address: address,
     postalCode: postalCode,
     provinceState: provinceState,
@@ -70,50 +63,75 @@ const createOrder = async (request, response) => {
     }
 
     //add buyer name to the order
-    order.buyerName = customerDocument.firstName + " " + customerDocument.lastName;
+    order.buyerName =
+      customerDocument.firstName + " " + customerDocument.lastName;
 
     //destructure cart for shorter call
     const { cart } = customerDocument;
 
-    //this loop checks if all items with according quantity are in stock, update stock quantities and push productinfos in the shoppingBag
-    let stockInfo = { isInStock: true, itemsId: [] };
-    const promises = cart.map((cartProduct) => {
-      return db
-        .collection("items")
-        .findOne({ _id: Number(cartProduct._id) }); });
-        
-        const results = await Promise.all(promises);
-        console.log(results);
-        //check which items are to low in stock not existing, save their id and prevent their quantities from getting modified
-        if (!dbProduct || dbProduct.numInStock < cartProduct.quantity) {
-          stockInfo.isInStock = false;
-          stockInfo.itemsId.push(cartProduct._id);
-        } else {
-          //update quantities in the items db
-          const result = db
-            .collection("items")
-            .updateOne({ _id: dbProduct._id }, { $inc: { numInStock: -1 } });
-          //push useful product infos in the shoppingBag
-          result.modifiedCount === 1 &&
-            order.shoppingBag.push({
-              _id: dbProduct._id,
-              name: dbProduct.name,
-              price: dbProduct.price,
-              imageSrc: dbProduct.imageSrc,
-            });
-        }
+    //loop over items in the cart and find a their corresponding document in the db and store it in an array
+    const findShoppingList = cart.map((cartProduct) => {
+      return db.collection("items").findOne({ _id: Number(cartProduct._id) });
+    });
+    const dbShoppingList = await Promise.all(findShoppingList);
 
-    // send error if items don't have enough stock or non existing product id
-    if (!stockInfo.isInStock) {
+
+    //validate if items in the cart where found in the db
+    const isProductMissing = dbShoppingList.some((product) => !product);
+    console.log(isProductMissing);
+    if (isProductMissing) {
       return response.status(400).json({
         status: 400,
-        data: stockInfo,
-        message:
-          "Some products don't have enough stock left or id doesn't exist. See data for problematic products id numbers",
+        data: {},
+        message: "at least one product id wasn't found in the db",
       });
     }
 
+    // check if theres sufficient quantities in stock and push id in an array
+    lowStockProducts = [];
+    for (let index = 0; index < cart.lenght; index++) {
+      if (cart[index].quantity > dbShoppingList[index].quantity) {
+        lowStockProducts.push(cart[index]._id);
+      }
+    }
+
+    if (lowStockProducts.lenght > 0) {
+      return response.status(400).json({
+        status: 400,
+        data: lowStockProducts,
+        message: "insuficient stock. See data from problematic product IDs",
+      });
+    }
+
+    //push useful product infos in the shoppingBag
+    dbShoppingList.forEach((dbProduct) => {
+      order.shoppingBag.push({
+        _id: dbProduct._id,
+        name: dbProduct.name,
+        price: dbProduct.price,
+        imageSrc: dbProduct.imageSrc,
+      });
+    });
+
     console.log(order);
+
+    response
+      .status(200)
+      .json({ status: 200, data: order, message: "order successfully passed" });
+
+    //update quantities in the items db
+    const updateStocks = cart.map((cartProduct) => {
+      return db
+        .collection("items")
+        .updateOne(
+          { _id: cartProduct._id },
+          { $inc: { numInStock: -cartProduct.quantity } }
+        );
+    });
+
+    const updateConfirmations = await Promise.all(updateStocks)
+
+    console.log(updateConfirmations);
 
     //push order document in orders collection
     await db.collection("orders").insertOne(order);
