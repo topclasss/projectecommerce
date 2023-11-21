@@ -4,19 +4,28 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 
+
+
 const getCustomerInfos = async (request, response) => {
   const { email, password } = request.body;
+
+  if (!email || !password){
+    return response.status(400).json({
+      status: 400,
+      data: request.body,
+      message: "missing information",
+    });
+  }
 
   const client = new MongoClient(MONGO_URI);
   try {
     await client.connect();
     const db = client.db("project_ecom");
-    const result = await db
+    const customerInfos = await db
       .collection("customers")
-      .find({ email: email })
-      .toArray();
+      .findOne({ email: email })
 
-    const customerInfos = result[0];
+    
 
     // check if email and password match. result error if not. Delete password key from data if valid.
     if (email === customerInfos.email && password === customerInfos.password) {
