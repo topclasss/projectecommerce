@@ -61,13 +61,20 @@ const GetRandomProducts = () => {
 export default GetRandomProducts;
 
 const MainGrid = styled.main`
-  display: grid;
+    display: grid;
   justify-items: center;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  max-width: 600px;
-  margin: 0 200px 200px 330px;
+  max-width: fit-content;
+  margin: 0 auto 100px auto;
   
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr 1fr ;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr ;
+  }
 `;
 
 const ProductBox = styled(NavLink)`
@@ -77,7 +84,7 @@ const ProductBox = styled(NavLink)`
   margin: 10px;
   color: black;
   text-decoration: none;
-  min-width: 180px;
+  min-width: 220px;
   background-color: white;
   
   ;

@@ -108,7 +108,7 @@ const ProductBox = styled(NavLink)`
   margin: 10px;
   color: black;
   text-decoration: none;
-  min-width: 180px;
+  min-width: 220px;
   background-color: white;
 
 &.active {

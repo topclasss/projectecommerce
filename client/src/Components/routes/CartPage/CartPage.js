@@ -104,7 +104,7 @@ const checkoutButtonStyle = {
   borderRadius: "5px",
 };
 
-//To ADD
+
 const removeButtonStyle = {
   backgroundColor: "black", 
   color: "#fff",
