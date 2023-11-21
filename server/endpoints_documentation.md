@@ -11,6 +11,15 @@ data: [ <all products ojects in an array> ]
 return:
 data: { <one product object> }
 
+/get-company/:id
+return exemple:
+	"data": {
+		"_id": 19962,
+		"name": "Barska",
+		"url": "http://www.barska.com/",
+		"country": "United States"
+	}
+
 
 /create-customer
 expect:
