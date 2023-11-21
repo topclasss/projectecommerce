@@ -54,10 +54,10 @@ const createOrder = async (request, response) => {
     }
 
     //validate if cart is empty
-    if (customerDocument.cart.lenght < 1) {
+    if (customerDocument.cart.length === 0) {
       return response.status(400).json({
         status: 400,
-        data: order,
+        data: customerDocument,
         message: "this customer's cart is empty",
       });
     }
@@ -75,10 +75,8 @@ const createOrder = async (request, response) => {
     });
     const dbShoppingList = await Promise.all(findShoppingList);
 
-
     //validate if items in the cart where found in the db
     const isProductMissing = dbShoppingList.some((product) => !product);
-    console.log(isProductMissing);
     if (isProductMissing) {
       return response.status(400).json({
         status: 400,
@@ -89,13 +87,14 @@ const createOrder = async (request, response) => {
 
     // check if theres sufficient quantities in stock and push id in an array
     lowStockProducts = [];
-    for (let index = 0; index < cart.lenght; index++) {
-      if (cart[index].quantity > dbShoppingList[index].quantity) {
+    for (let index = 0; index < cart.length; index++) {
+      if (cart[index].quantity > dbShoppingList[index].numInStock) {
         lowStockProducts.push(cart[index]._id);
       }
     }
 
-    if (lowStockProducts.lenght > 0) {
+    //send error if one or more products has insificient quantity
+    if (lowStockProducts.length > 0) {
       return response.status(400).json({
         status: 400,
         data: lowStockProducts,
@@ -109,11 +108,9 @@ const createOrder = async (request, response) => {
         _id: dbProduct._id,
         name: dbProduct.name,
         price: dbProduct.price,
-        imageSrc: dbProduct.imageSrc,
+        // imageSrc: dbProduct.imageSrc,
       });
     });
-
-    console.log(order);
 
     response
       .status(200)
@@ -124,14 +121,17 @@ const createOrder = async (request, response) => {
       return db
         .collection("items")
         .updateOne(
-          { _id: cartProduct._id },
+          { _id: Number(cartProduct._id) },
           { $inc: { numInStock: -cartProduct.quantity } }
         );
     });
 
-    const updateConfirmations = await Promise.all(updateStocks)
-
-    console.log(updateConfirmations);
+    const updateConfirmations = await Promise.all(updateStocks);
+    
+    //log its there was a problem with the update
+    updateConfirmations.forEach((confirmation)=> {
+      confirmation.modifiedCount === 0 && console.log("An item stock number wasn't updated correctly");
+    })
 
     //push order document in orders collection
     await db.collection("orders").insertOne(order);
